@@ -34,6 +34,7 @@ class ScreenBoard:
           for j in range(MapSettings.columns):
               self.draw_tile(j, i, MapSettings)
       pygame.display.flip()
+
 class GameMap:
   etapas=["1","2","3","4","5","6","7","8","9","B","C","D","E","G","H","I","J","K","L","N","O","P","Q","S","T","U","V","W","X","Y","Z"]
     
@@ -89,6 +90,15 @@ class Node:
     if (IsValid(x,y+1)):
       vizinhos.append(Node(GameMap,etapa,x,y+1,self.g+dictdifficulty[GameMap.getTileType(x,y+1)]))
     return vizinhos
+  
+  def getPath(self):
+    temp=self
+    pathList = list()
+    while(temp.partner!=None):
+      pathList.append(temp)
+      temp=temp.partner
+    return reversed(pathList)
+
 
 def pegaMenor(lista):
     menor = lista[0]
@@ -106,11 +116,8 @@ def aEstrela(GameMap,etapa, node, ScreenBoard):
         current = pegaMenor(aberta)
         #print(current.x,current.y)
         if (current.x == etapa.GoalX and current.y == etapa.GoalY):
-            temp=current
-            while(temp.partner!=None):
-                ScreenBoard.draw_path(temp.x,temp.y,GameMap,(255,0,0))#CONSTRUIR LISTA PARA PEGAR INVERSO
-                temp=temp.partner
-            return current
+            pathList = current.getPath()
+            return pathList
         aberta.remove(current)
         fechada.append(current)
         vizinhos=current.getVizinhos(GameMap, etapa)
