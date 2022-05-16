@@ -63,7 +63,10 @@ class Etapa:
       
   def manhattan(self,x,y):
     return abs(self.GoalX - x)+abs(self.GoalY - y)
-    
+
+def IsValid(x,y):
+  return(x>=0 and x<=300 and y>=0 and y<=82)  
+
 class Node:
   def __init__(self,GameMap,etapa,x,y,g):
     self.x=x
@@ -72,23 +75,20 @@ class Node:
     self.g = g #mudar
     self.f = self.g + self.h
     self.partner=None
-    
-def IsValid(x,y):
-  return(x>=0 and x<=300 and y>=0 and y<=82)
-        
-def getVizinhos(node,GameMap,etapa):
-  x=node.x
-  y=node.y
-  vizinhos=[]
-  if (IsValid(x-1,y)): 
-    vizinhos.append(Node(GameMap,etapa,x-1,y,node.g+dictdifficulty[GameMap.getTileType(x-1,y)]))
-  if (IsValid(x+1,y)):
-    vizinhos.append(Node(GameMap,etapa,x+1,y,node.g+dictdifficulty[GameMap.getTileType(x+1,y)]))
-  if (IsValid(x,y-1)):
-    vizinhos.append(Node(GameMap,etapa,x,y-1,node.g+dictdifficulty[GameMap.getTileType(x,y-1)]))
-  if (IsValid(x,y+1)):
-    vizinhos.append(Node(GameMap,etapa,x,y+1,node.g+dictdifficulty[GameMap.getTileType(x,y+1)]))
-  return vizinhos
+  
+  def getVizinhos(self, GameMap, etapa):
+    x=self.x
+    y=self.y
+    vizinhos=[]
+    if (IsValid(x-1,y)): 
+      vizinhos.append(Node(GameMap,etapa,x-1,y,self.g+dictdifficulty[GameMap.getTileType(x-1,y)]))
+    if (IsValid(x+1,y)):
+      vizinhos.append(Node(GameMap,etapa,x+1,y,self.g+dictdifficulty[GameMap.getTileType(x+1,y)]))
+    if (IsValid(x,y-1)):
+      vizinhos.append(Node(GameMap,etapa,x,y-1,self.g+dictdifficulty[GameMap.getTileType(x,y-1)]))
+    if (IsValid(x,y+1)):
+      vizinhos.append(Node(GameMap,etapa,x,y+1,self.g+dictdifficulty[GameMap.getTileType(x,y+1)]))
+    return vizinhos
 
 def pegaMenor(lista):
     menor = lista[0]
@@ -113,7 +113,7 @@ def aEstrela(GameMap,etapa, node, ScreenBoard):
             return current
         aberta.remove(current)
         fechada.append(current)
-        vizinhos=getVizinhos(current, GameMap, etapa)
+        vizinhos=current.getVizinhos(GameMap, etapa)
         for nextNode in vizinhos:
             inFechada=False
             inAberta=False
