@@ -1,15 +1,18 @@
 import pygame
-import matrix_methods
-from run_better_route import GameMap, Etapa, Node, ScreenBoard, aEstrela
+from gameMap import GameMap
+from screenBoard import ScreenBoard
+from run_better_route import  Etapa, Node, aEstrela
 from time import sleep
-dictdifficulty=matrix_methods.get_tile_difficulty()
+
        
 def main():
   running=True
   pygame.init()
-  mapaconfig=GameMap(82,300,matrix_methods.get_matriz())
+  
+  mapaconfig=GameMap('mapa.txt',82,300)
   screenSettings=ScreenBoard(1800,492,5,1)
   screenSettings.draw_map(mapaconfig)
+  
   finalPath = list()
   for index, etapas in enumerate(mapaconfig.etapas[:-1]):
     coordInicial=mapaconfig.findGoal(etapas)
