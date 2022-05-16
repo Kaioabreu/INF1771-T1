@@ -27,4 +27,4 @@ def get_tempo(dificuldade, somatorio_agilidades):
     return dificuldade/somatorio_agilidades
 
 def get_tile_difficulty():
-    return {'.':1,'R':5,'V':10,'A':15,'M':200}
+    return {'.':1,'R':5,'V':10,'A':15,'M':200, 'Etapa':0}
