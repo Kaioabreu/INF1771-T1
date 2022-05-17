@@ -2,8 +2,7 @@ import pygame
 from gameMap import GameMap
 from screenBoard import ScreenBoard
 from run_better_route import  Etapa, Node, aEstrela
-from time import sleep
-
+from time import sleeps
        
 def main():
   running=True
