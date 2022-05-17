@@ -8,11 +8,11 @@ from time import sleep
 def main():
   running=True
   pygame.init()
-  
+  pygame.font.init()
   mapaconfig=GameMap('mapa.txt',82,300)
   screenSettings=ScreenBoard(1800,492,5,1)
   screenSettings.draw_map(mapaconfig)
-  
+  screenSettings.writeCost("Teste",1050,0,(0,0,0))
   finalPath = list()
   for index, etapas in enumerate(mapaconfig.etapas[:-1]):
     coordInicial=mapaconfig.findGoal(etapas)

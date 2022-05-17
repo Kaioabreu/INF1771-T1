@@ -1,6 +1,6 @@
 from time import sleep
 from screenBoard import *
-
+from random import randint
 class Etapa:
     
   def __init__(self, x, y, lPersonagens):
@@ -19,7 +19,7 @@ class Node:
     self.x=x
     self.y=y
     self.h=etapa.manhattan(x,y)
-    self.g = g #mudar
+    self.g = g
     self.f = self.g + self.h
     self.partner=None
   
@@ -58,6 +58,7 @@ def aEstrela(GameMap,etapa, node, ScreenBoard):
     fechada=[]  
     aberta.append(node)
     current=node
+    cor = (randint(0,255),randint(0,255),randint(0,255))
     while aberta:
         current = pegaMenor(aberta)
         #print(current.x,current.y)
@@ -72,7 +73,7 @@ def aEstrela(GameMap,etapa, node, ScreenBoard):
             inAberta=False
             for i in fechada:
                 if(nextNode.x==i.x and nextNode.y==i.y):
-                   ScreenBoard.draw_path(nextNode.x,nextNode.y,GameMap,(154,205,50))
+                   ScreenBoard.draw_path(nextNode.x,nextNode.y,GameMap,cor)
                    inFechada=True
             if(not(inFechada)):   
                 for i in aberta: 
