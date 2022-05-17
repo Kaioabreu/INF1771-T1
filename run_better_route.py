@@ -1,18 +1,34 @@
+from multiprocessing import set_forkserver_preload
 from time import sleep
 from screenBoard import *
 from random import randint
+class Personagem:
+  def __init__(self,agilidade,nome):
+    self.nome=nome
+    self.vida=8
+    self.agilidade=agilidade
+  def usar(self):
+    self.vida-=1
+
+def somaAgili(etapa):
+  soma = 0
+  for i in etapa.lPersonagens:
+    soma+= i.agilidade
+  return soma
+
 class Etapa:
     
   def __init__(self, x, y, lPersonagens):
     self.GoalX= x
     self.GoalY= y
     self.lPersonagens= lPersonagens
+    self.somaAgilidade=somaAgili(self)
       
   def manhattan(self,x,y):
     return abs(self.GoalX - x)+abs(self.GoalY - y)
 
 def IsValid(x,y):
-  return(x>=0 and x<=300 and y>=0 and y<=82)  
+  return(x>=0 and x<=299 and y>=0 and y<=81)  
 
 class Node:
   def __init__(self,GameMap,etapa,x,y,g):

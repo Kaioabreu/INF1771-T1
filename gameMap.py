@@ -22,8 +22,8 @@ class GameMap:
     def get_difficulty(self,etapa):
         return self.difficulty[etapa]
     
-    def get_agility(self,personagem):
-        return self.agility[personagem]
+    def get_agility(self):
+        return self.agility
     
     def get_tile_difficulty(self, x):
         return self.tile_difficulty[x]
