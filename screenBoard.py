@@ -1,3 +1,4 @@
+from webbrowser import BackgroundBrowser
 import pygame
 cores = {
     'R': (128, 128, 128),  # cinza
@@ -35,9 +36,10 @@ class ScreenBoard:
             for j in range(MapSettings.columns):
                 self.draw_tile(j, i, MapSettings)
         pygame.display.flip()
+    
     def writeCost(self,custo,x,y, cor):
         gameFont = pygame.font.SysFont('Comic Sans MS', 24)
-        texto = gameFont.render(custo, False,cor)
+        texto = gameFont.render(custo, False,cor,'white')
         self.screen.blit(texto, (x,y))
         pygame.display.flip()
         return 

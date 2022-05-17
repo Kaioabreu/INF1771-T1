@@ -43,7 +43,7 @@ class Node:
     while(temp.partner!=None):
       pathList.append(temp)
       temp=temp.partner
-    return reversed(pathList)
+    return pathList[::-1]
 
 
 def pegaMenor(lista):
