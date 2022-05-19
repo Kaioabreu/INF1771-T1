@@ -12,6 +12,7 @@ cores = {
 
 class ScreenBoard:
     healthBarSprints=(pygame.image.load("assets/begin_fill_health_bar.png"),pygame.image.load("assets/fill_health_bar.png"),pygame.image.load("assets/end_fill_health_bar.png"),pygame.image.load("assets/begin_empty_health_bar.png"),pygame.image.load("assets/empty_health_bar.png"),pygame.image.load("assets/end_empty_health_bar.png"))
+    HudMoldure=(pygame.image.load("assets/HUDMOLDURE.png"))
 
     def __init__(self, width, height, tile_size, margin):
         self.width = width
@@ -19,8 +20,10 @@ class ScreenBoard:
         self.tile_size = tile_size
         self.margin = margin
         self.screen = pygame.display.set_mode((width, height))
-        self.gameFont16 = pygame.font.Font("assets/alterebro-pixel-font.ttf", 16)
-
+        self.gameFont22 = pygame.font.Font("assets/alterebro-pixel-font.ttf", 32)
+    def draw_moldure(self):
+        self.screen.blit(self.HudMoldure,(0,(self.tile_size+self.margin)*82))
+        pygame.display.flip()
     def draw_tile(self, x, y, MapSettings):
         element = MapSettings.map[y][x]
         cor = cores.get(element, (153, 0, 153))
@@ -47,22 +50,23 @@ class ScreenBoard:
         if(health!=0):
             self.screen.blit(pygame.transform.scale(self.healthBarSprints[0],(14,18)),(x,y))
         for i in range(1,health):
-            self.screen.blit(pygame.transform.scale(self.healthBarSprints[1],(18,18)),(x+14+16*(i-1),y))
+            if(i!=7):
+                self.screen.blit(pygame.transform.scale(self.healthBarSprints[1],(18,18)),(x+14+16*(i-1),y))
         if(health==8):
             self.screen.blit(pygame.transform.scale(self.healthBarSprints[2],(14,18)),(x+14+16*6+2,y))
         pygame.display.flip()
     
     def draw_character_HUD(self, x, y, personagem,MapSettings):
        self.screen.blit(pygame.transform.scale(personagem.image,MapSettings.ImageSize[personagem.nome]),(x,y))
-       name = self.gameFont16.render(personagem.nome, False, (255,255,255))
-       agility = self.gameFont16.render(str(personagem.agilidade), False, (255,255,255))
-       self.screen.blit(name, (x+MapSettings.ImageSize[personagem.nome][0]+10,y+10))
-       self.screen.blit(agility, (x+MapSettings.ImageSize[personagem.nome][0]+10,y+30))
+       name = self.gameFont22.render(personagem.nome, False, (0,0,0))
+       agility = self.gameFont22.render(str(personagem.agilidade), False, (0,0,0))
+       self.screen.blit(name, (x+MapSettings.ImageSize[personagem.nome][0]+10,y+5))
+       self.screen.blit(agility, (x+MapSettings.ImageSize[personagem.nome][0]+10,y+35))
 
 
     def writeCost(self,custo,x,y, cor):
         gameFont = pygame.font.SysFont('Comic Sans MS', 24)
-        texto = gameFont.render(custo, False,cor,'white')
+        texto = gameFont.render(custo, False,cor)
         self.screen.blit(texto, (x,y))
         pygame.display.flip()
         return 

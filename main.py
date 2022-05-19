@@ -5,26 +5,28 @@ from screenBoard import ScreenBoard
 from run_better_route import  Etapa, Node, aEstrela, Personagem
 from time import sleep
 from random import randint
-health=pygame.image.load("assets/begin_fill_health_bar.png")
-       
+
 def main():
+  GameInterfaceVariables= {'Witdh':300,'Height':82,'HUDSize':150,'Margin':1,'TileSize':3,'HUDMarginX':40,'CharHUDX':166}
   Width=300
   Heigth=82
   running=True
   pygame.init()
   pygame.font.init()
-  mapaconfig=GameMap('mapa.txt',82,300)
-  screenSettings=ScreenBoard(1200,82*4+150,3,1)
+  mapaconfig=GameMap('mapa.txt',Heigth,Width)
+  TileMargin=GameInterfaceVariables['TileSize']+GameInterfaceVariables['Margin']
+  screenSettings=ScreenBoard(Width*TileMargin,Heigth*TileMargin+GameInterfaceVariables['HUDSize'],GameInterfaceVariables['TileSize'],GameInterfaceVariables['Margin'])
   custoParcial = 0
   screenSettings.draw_map(mapaconfig)
+  screenSettings.draw_moldure()
   Dagilidade=mapaconfig.get_agility()
   lPersonagem=[]
   for i in Dagilidade:
     pers=Personagem(Dagilidade[i],i)
     lPersonagem.append(pers)
   for i in range(0,len(lPersonagem)):
-    screenSettings.draw_character_HUD(40+166*i,82*4+33,lPersonagem[i],mapaconfig)
-    screenSettings.draw_health_bar(40+166*i, 82*4+103)
+    screenSettings.draw_character_HUD(GameInterfaceVariables['HUDMarginX']+GameInterfaceVariables['CharHUDX']*i,Heigth*TileMargin+33,lPersonagem[i],mapaconfig)
+    screenSettings.draw_health_bar(GameInterfaceVariables['HUDMarginX']+GameInterfaceVariables['CharHUDX']*i, Heigth*TileMargin+103)
   finalPath = list()
   '''for index, etapas in enumerate(mapaconfig.etapas[:-1]):
     coordInicial=mapaconfig.findGoal(etapas)
@@ -41,7 +43,7 @@ def main():
     finalPath.extend(listPath)
     sleep(0.5)'''
   #screenSettings.draw_map(mapaconfig)
-  screenSettings.writeCost(f"Custo Final = {custoParcial}",900 ,0,(0,0,0))
+  screenSettings.writeCost(f"Custo Final = {custoParcial}",900 ,0,(255,255,255))
   for no in finalPath:
     screenSettings.draw_path(no.x,no.y,mapaconfig,(255,0,0))
     sleep(0.02)
