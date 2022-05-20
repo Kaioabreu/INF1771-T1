@@ -10,13 +10,14 @@ class Personagem:
     self.image = pygame.image.load("assets/"+str(nome)+".png")
   def usar(self):
     self.vida-=1
+  def reset(self):
+   self.vida=8
 
 def somaAgili(etapa):
   soma = 0
   for i in etapa.lPersonagens:
     soma+= i.agilidade
   return soma
-
 class Etapa:
     
   def __init__(self, x, y, lPersonagens):

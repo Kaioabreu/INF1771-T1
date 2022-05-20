@@ -28,20 +28,23 @@ def main():
     screenSettings.draw_character_HUD(GameInterfaceVariables['HUDMarginX']+GameInterfaceVariables['CharHUDX']*i,Heigth*TileMargin+33,lPersonagem[i],mapaconfig)
     screenSettings.draw_health_bar(GameInterfaceVariables['HUDMarginX']+GameInterfaceVariables['CharHUDX']*i, Heigth*TileMargin+103)
   finalPath = list()
-  '''for index, etapas in enumerate(mapaconfig.etapas[:-1]):
-    coordInicial=mapaconfig.findGoal(etapas)
+  print(len(mapaconfig.etapas))
+
+  for index, etapa in enumerate(mapaconfig.etapas[:-1]):
+    coordInicial=mapaconfig.findGoal(etapa)
     coordetapa1=mapaconfig.findGoal(mapaconfig.etapas[index+1])
     etapa1=Etapa(coordetapa1[0],coordetapa1[1],[lPersonagem[1]])
     noInicial=Node(mapaconfig,etapa1,coordInicial[0],coordInicial[1],0)
-    screenSettings.writeCost(f"Custo Parcial = {custoParcial}",900 ,0,(0,0,0))
-    screenSettings.writeCost(f"Dude = {lPersonagem[1].nome}",900 ,50,(0,0,0))
-    screenSettings.writeCost(f"Vida = {lPersonagem[1].vida}",900 ,100,(0,0,0))
     listPath = aEstrela(mapaconfig,etapa1,noInicial,screenSettings)
+    mapaconfig.setDifficultySum(index+1, listPath[-1].g)
+    print(mapaconfig.difficultySum)
     custoParcial += listPath[-1].g
     dificuldade=(index+1)*10+listPath[-1].g
     tempo=dificuldade/etapa1.somaAgilidade
     finalPath.extend(listPath)
-    sleep(0.5)'''
+    sleep(0.5)
+  mapaconfig.sortDictDifficulty()
+  print(mapaconfig.difficultySum)
   #screenSettings.draw_map(mapaconfig)
   screenSettings.writeCost(f"Custo Final = {custoParcial}",900 ,0,(255,255,255))
   for no in finalPath:
