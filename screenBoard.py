@@ -62,6 +62,8 @@ class ScreenBoard:
        agility = self.gameFont22.render(str(personagem.agilidade), False, (0,0,0))
        self.screen.blit(name, (x+MapSettings.ImageSize[personagem.nome][0]+10,y+5))
        self.screen.blit(agility, (x+MapSettings.ImageSize[personagem.nome][0]+10,y+35))
+       self.draw_health_bar(x,y+70,personagem.vida)
+       pygame.display.flip()
 
 
     def writeCost(self,custo,x,y, cor):

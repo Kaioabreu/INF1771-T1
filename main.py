@@ -6,6 +6,9 @@ from run_better_route import  Etapa, Node, aEstrela, Personagem
 from time import sleep
 from random import randint
 
+bestCombination=open("bestCombination.txt","r").readline()
+bestCombination=list(bestCombination)
+
 def main():
   GameInterfaceVariables= {'Witdh':300,'Height':82,'HUDSize':150,'Margin':1,'TileSize':3,'HUDMarginX':40,'CharHUDX':166}
   Width=300
@@ -26,7 +29,6 @@ def main():
     lPersonagem.append(pers)
   for i in range(0,len(lPersonagem)):
     screenSettings.draw_character_HUD(GameInterfaceVariables['HUDMarginX']+GameInterfaceVariables['CharHUDX']*i,Heigth*TileMargin+33,lPersonagem[i],mapaconfig)
-    screenSettings.draw_health_bar(GameInterfaceVariables['HUDMarginX']+GameInterfaceVariables['CharHUDX']*i, Heigth*TileMargin+103)
   finalPath = list()
   print(len(mapaconfig.etapas))
 
@@ -37,10 +39,10 @@ def main():
     noInicial=Node(mapaconfig,etapa1,coordInicial[0],coordInicial[1],0)
     listPath = aEstrela(mapaconfig,etapa1,noInicial,screenSettings)
     mapaconfig.setDifficultySum(index+1, listPath[-1].g)
-    print(mapaconfig.difficultySum)
     custoParcial += listPath[-1].g
     dificuldade=(index+1)*10+listPath[-1].g
     tempo=dificuldade/etapa1.somaAgilidade
+    print(mapaconfig.difficultySum)
     finalPath.extend(listPath)
     sleep(0.5)
   mapaconfig.sortDictDifficulty()
@@ -48,6 +50,13 @@ def main():
   #screenSettings.draw_map(mapaconfig)
   screenSettings.writeCost(f"Custo Final = {custoParcial}",900 ,0,(255,255,255))
   for no in finalPath:
+    etapa=0
+    if (mapaconfig.getTileType(no.x,no.y)=='Etapa'):
+      for i in bestCombination[etapa][0]:
+        for j in lPersonagem:
+          if(i==j.nome):
+            j.usar()
+
     screenSettings.draw_path(no.x,no.y,mapaconfig,(255,0,0))
     sleep(0.02)
   while running:
