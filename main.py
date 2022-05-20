@@ -57,7 +57,8 @@ def main():
         for j in lPersonagem:
           if(i==j.nome):
             j.usar()
-
+      for i in range(0,len(lPersonagem)):
+        screenSettings.draw_character_HUD(GameInterfaceVariables['HUDMarginX']+GameInterfaceVariables['CharHUDX']*i,Heigth*TileMargin+33,lPersonagem[i],mapaconfig)
     screenSettings.draw_path(no.x,no.y,mapaconfig,(255,0,0))
     sleep(0.02)
   while running:
