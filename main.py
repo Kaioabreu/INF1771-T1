@@ -50,11 +50,14 @@ def main():
   print(mapaconfig.difficultySum)
   #screenSettings.draw_map(mapaconfig)
   screenSettings.writeCost(f"Custo Final = {custoParcial}",900 ,0,(255,255,255))
+  etapa=0
   for no in finalPath:
-    etapa=0
-    if (mapaconfig.getTileType(no.x,no.y)=='Etapa'):
+    
+    if (mapaconfig.getTileType(no.x,no.y)=='Etapa' and etapa <= 30):
+      
       for i in bestCombination[etapa][0]:
         for j in lPersonagem:
+          print(i, j.nome)
           if(i==j.nome):
             j.usar()
       etapa+=1
