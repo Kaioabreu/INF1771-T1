@@ -4,6 +4,7 @@ from random import random, shuffle
 from gameMap import GameMap
 from run_better_route import Personagem
 import random
+from random import randint
 from operator import itemgetter
  
 test = GameMap('mapa.txt',300,82)
@@ -19,48 +20,48 @@ class Combination:
         return self.bestCombination
     
     def generateCombination(self):
-        listaAux = []
+        listaAux = [[],[],[],[],[],[],[]]
         listaP = self.listaPersonagem
         for i in listaP:            
-            listaAux.append([i.nome])
+            listaAux[0].append([i.nome])
         comb_2 = combinations(listaP,2)
         for p in comb_2:
             l=[]
             for i in p:
                 l.append(i.nome)
-            listaAux.append(l) 
+            listaAux[1].append(l) 
         comb_3 = combinations(listaP,3)
         for p in comb_3:
             l=[]
             for i in p:
                 l.append(i.nome)
-            listaAux.append(l) 
-        '''
+            listaAux[2].append(l) 
+          
         comb_4 = combinations(listaP,4)
         for p in comb_4:
             l=[]
             for i in p:
                 l.append(i.nome)
-            listaAux.append(l) 
+            listaAux[3].append(l) 
         comb_5 = combinations(listaP,5)
         for p in comb_5:
             l=[]
             for i in p:
                 l.append(i.nome)
-            listaAux.append(l) 
+            listaAux[4].append(l) 
         comb_6 = combinations(listaP,6)
         for p in comb_6:
             l=[]
             for i in p:
                 l.append(i.nome)
-            listaAux.append(l) 
+            listaAux[5].append(l) 
         comb_7 = combinations(listaP,7)
         for p in comb_7:
             l=[]
             for i in p:
                 l.append(i.nome)
-            listaAux.append(l)
-        '''
+            listaAux[6].append(l)
+        
         listaAux = list(listaAux)
         return listaAux
 
@@ -68,7 +69,7 @@ class Combination:
         for i in lista:
             for j in self.listaPersonagem:
                 if(i==j.nome):
-                    if(j.vida<=0):
+                    if(j.vida==0):
                         return False
         return True
     
@@ -79,47 +80,83 @@ class Combination:
                     j.usar()
                     #print("%s : %d vidas"%(j.nome, j.vida))
     def faz31etapas(self):
+        a1=a2=a3=a4=a5=a6=a7=0
+        while(a1+2*a2+3*a3+4*a4+5*a5+6*a6+7*a7!=56 or (a1+a2+a3+a4+a5+a6+a7)!=31):
+            a1= randint(0,10)
+            a2 = randint(0,26)
+            a3 = randint(0,18)
+            a4 = randint(0,3)
+            a5 = randint(0,0)
+            a6 = randint(0,0)
+            a7 = randint(0,0)
         l=self.generateCombination()
         possibleFinal=[]
-        for i in range(0,31):
+        for i in range(a7):
+            selected=l[6][0]
+            self.selectOnePosibility(selected)
+            possibleFinal.append(selected)
+        for i in range(a6):
             notDone = True
             while(notDone):
-                selected=l[random.randint(0,len(l)-1)]
-                
+                selected=l[5][random.randint(0,len(l[5])-1)]
                 if(self.checkPosibility(selected)):
                     self.selectOnePosibility(selected)
                     possibleFinal.append(selected)
-                    notDone=False
-                All0=True
-                for i in self.listaPersonagem:
-                    if(i.vida!=0):
-                        All0=False
-                if All0==True:
-                    return -1
-        for i in self.listaPersonagem:
-            for j in range(0,i.vida):
-                for k in possibleFinal:
-                    if(i.nome not in k):
-                        k.append(i.nome)
-                        i.usar()
-                        break
-            '''while(i.vida>0):
-                random.shuffle(possibleFinal)
-                #print(possibleFinal)
-                while(i.nome in possibleFinal[0]):
-                    random.shuffle(possibleFinal)
-                i.usar()
-                possibleFinal[0].append(i.nome)'''
-        
+                    notDone = False
+        for i in range(a5):
+            notDone = True
+            while(notDone):
+                selected=l[4][random.randint(0,len(l[4])-1)]
+                if(self.checkPosibility(selected)):                   
+                    self.selectOnePosibility(selected)
+                    possibleFinal.append(selected)
+                    notDone = False
+        for i in range(a4):
+            notDone = True            
+            while(notDone):
+                selected=l[3][random.randint(0,len(l[3])-1)]
+                if(self.checkPosibility(selected)):
+                    self.selectOnePosibility(selected)
+                    possibleFinal.append(selected)
+                    notDone = False
+        for i in range(a3):
+            notDone = True
+            while(notDone):
+                selected=l[2][random.randint(0,len(l[2])-1)]
+                if(self.checkPosibility(selected)):
+                    
+                    self.selectOnePosibility(selected)
+                    possibleFinal.append(selected)
+                    notDone = False
+        for i in range(a2):
+            notDone = True
+            while(notDone):
+                selected=l[1][random.randint(0,len(l[1])-1)]
+                if(self.checkPosibility(selected)):
+                    
+                    self.selectOnePosibility(selected)
+                    possibleFinal.append(selected)
+                    notDone = False
+        for i in range(a1):
+            notDone = True
+            while(notDone):
+                selected=l[0][random.randint(0,len(l[0])-1)]
+                if(self.checkPosibility(selected)):
+                    
+                    self.selectOnePosibility(selected)
+                    possibleFinal.append(selected)
+                    notDone = False
         return possibleFinal
 def FindOne():
-    for i in c.listaPersonagem:
+    for i in lPersonagem:
         i.reset()
     possible=c.faz31etapas()
-    while (possible==-1):
-        for i in c.listaPersonagem:
-            i.reset()
+    contador=0
+    while (possible==-1 and contador<1000000):
+        for i in lPersonagem:
+            i.vida=8
         possible=c.faz31etapas()
+        contador+=1
     return possible
 def calcAgilityAndSort(lista):
     lAgi=[]
@@ -146,7 +183,6 @@ for i in Dagilidade:
     pers=Personagem(Dagilidade[i],i)
     lPersonagem.append(pers)
 c = Combination(lPersonagem)
-
 dictt=test.difficultySum
 sum=0
 for i in dictt.values():
@@ -154,8 +190,8 @@ for i in dictt.values():
 contador=0
 bestList = FindOne()
 best=calcDifficulty(calcAgilityAndSort(FindOne()),dictt)
-bestFind = bestList
-while(contador<50):
+bestFind = FindOne()
+while(contador<1000):
     find = FindOne()
     new=calcDifficulty(calcAgilityAndSort(find),dictt)
     print(new)
@@ -168,7 +204,7 @@ while(contador<50):
         contador+=1  
 
 
-print(len(bestFind))
+
 f=open("bestCombination.txt","w")
 f.write(str(bestList))
 print(f"O melhor foi {best} com {bestList}\n\n{bestFind}")
