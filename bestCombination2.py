@@ -6,7 +6,8 @@ from run_better_route import Personagem
 import random
 from random import randint
 from operator import itemgetter
- 
+import pickle
+
 test = GameMap('mapa.txt',300,82)
 print()
 
@@ -85,7 +86,7 @@ class Combination:
             a1= randint(0,10)
             a2 = randint(0,26)
             a3 = randint(0,18)
-            a4 = randint(0,3)
+            a4 = randint(0,2)
             a5 = randint(0,0)
             a6 = randint(0,0)
             a7 = randint(0,0)
@@ -183,7 +184,7 @@ for i in Dagilidade:
     pers=Personagem(Dagilidade[i],i)
     lPersonagem.append(pers)
 c = Combination(lPersonagem)
-dictt=test.difficultySum
+dictt={5: 76, 3: 82, 4: 94, 1: 107, 8: 124, 11: 137, 9: 142, 10: 146, 2: 154, 12: 178, 15: 193, 7: 209, 19: 215, 18: 216, 20: 217, 16: 220, 13: 229, 6: 231, 17: 240, 21: 243, 14: 250, 24: 263, 22: 285, 25: 315, 26: 317, 28: 364, 29: 390, 30: 395, 27: 407, 23: 472, 31: 478}
 sum=0
 for i in dictt.values():
     sum+=i
@@ -205,7 +206,5 @@ while(contador<1000):
 
 
 
-f=open("bestCombination.txt","w")
-f.write(str(bestList))
-print(f"O melhor foi {best} com {bestList}\n\n{bestFind}")
-f.close()
+with open('bestCombination', 'wb') as fp:
+    pickle.dump(bestList, fp)

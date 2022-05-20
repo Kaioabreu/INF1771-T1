@@ -1,13 +1,14 @@
-from turtle import width
 import pygame
 from gameMap import GameMap
 from screenBoard import ScreenBoard
 from run_better_route import  Etapa, Node, aEstrela, Personagem
 from time import sleep
 from random import randint
+import pickle
 
-bestCombination=open("bestCombination.txt","r").readline()
-bestCombination=list(bestCombination)
+with open('bestCombination','rb') as fp:
+  bestCombination=pickle.load(fp)
+print(bestCombination)
 
 def main():
   GameInterfaceVariables= {'Witdh':300,'Height':82,'HUDSize':150,'Margin':1,'TileSize':3,'HUDMarginX':40,'CharHUDX':166}
