@@ -211,7 +211,10 @@ class Combination:
         for i in dictt.values():
             sum += i
         contador = 0
-        best = calcDifficulty(self.bestCombination,dictt)
+        if self.bestCombination: #Se não existir vai ser None, assim irá direto ao None
+            best = calcDifficulty(self.bestCombination,dictt)
+        else:
+            best = 100000000000
         while(contador < 1000):
             lista = self.calcAgilityAndSort()
             new = calcDifficulty(lista, dictt)
@@ -227,9 +230,3 @@ class Combination:
 
         return 
 
-
-
-
-# Testando
-#c = Combination()
-#c.calcBestCombination()
