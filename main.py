@@ -27,6 +27,7 @@ def main():
   Dagilidade=mapaconfig.get_agility()
   lPersonagem=[]
   for i in Dagilidade:
+    #print(i)
     pers=Personagem(Dagilidade[i],i)
     lPersonagem.append(pers)
   for i in range(0,len(lPersonagem)):
@@ -68,6 +69,7 @@ def main():
     if (mapaconfig.getTileType(no.x,no.y)=='Etapa' and etapa <= 30):
       
       for i in bestCombination[etapa][0]:
+        screenSettings.draw_selected_character[i]
         for j in lPersonagem:
           print(i, j.nome)
           if(i==j.nome):

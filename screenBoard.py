@@ -13,6 +13,7 @@ cores = {
 class ScreenBoard:
     healthBarSprints=(pygame.image.load("assets/begin_fill_health_bar.png"),pygame.image.load("assets/fill_health_bar.png"),pygame.image.load("assets/end_fill_health_bar.png"),pygame.image.load("assets/begin_empty_health_bar.png"),pygame.image.load("assets/empty_health_bar.png"),pygame.image.load("assets/end_empty_health_bar.png"))
     HudMoldure=(pygame.image.load("assets/HUDMOLDURE.png"))
+    selectedMoldure=pygame.image.load("assets/selectChar.png")
 
     def __init__(self, width, height, tile_size, margin):
         self.width = width
@@ -64,7 +65,13 @@ class ScreenBoard:
        self.screen.blit(agility, (x+MapSettings.ImageSize[personagem.nome][0]+10,y+35))
        self.draw_health_bar(x,y+70,personagem.vida)
        pygame.display.flip()
-
+    
+    def draw_selected_character(self, lPersonagens):
+        daux={"Aang":0, "Zukko":1, "Toph":2, "Katara":3, "Sokka":4, "Appa":5, "Momo":6}
+        for i in lPersonagens:
+            self.screen.blit(self.selectedMoldure,(100+166*daux[i],500))
+        pygame.display.flip()
+            
 
     def writeCost(self,custo,x,y, cor):
         gameFont = pygame.font.SysFont('Comic Sans MS', 24)
