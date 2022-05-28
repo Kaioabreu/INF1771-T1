@@ -1,4 +1,5 @@
 import pygame
+from bestCombination import Combination, bestCombination
 from gameMap import GameMap
 from screenBoard import ScreenBoard
 from run_better_route import  Etapa, Node, aEstrela, Personagem
@@ -6,9 +7,9 @@ from time import sleep
 from random import randint
 import pickle
 
-with open('bestCombination','rb') as fp:
+"""with open('bestCombination','rb') as fp:
   bestCombination=pickle.load(fp)
-print(bestCombination)
+print(bestCombination)"""
 
 def main():
   GameInterfaceVariables= {'Witdh':300,'Height':82,'HUDSize':150,'Margin':1,'TileSize':3,'HUDMarginX':40,'CharHUDX':166}
@@ -33,7 +34,7 @@ def main():
   finalPath = list()
   print(len(mapaconfig.etapas))
 
-  for index, etapa in enumerate(mapaconfig.etapas[:4]):
+  for index, etapa in enumerate(mapaconfig.etapas[:-1]):
     coordInicial=mapaconfig.findGoal(etapa)
     coordetapa1=mapaconfig.findGoal(mapaconfig.etapas[index+1])
     etapa1=Etapa(coordetapa1[0],coordetapa1[1],[lPersonagem[1]])
@@ -43,15 +44,20 @@ def main():
     custoParcial += listPath[-1].g
     dificuldade=(index+1)*10+listPath[-1].g
     tempo=dificuldade/etapa1.somaAgilidade
-    print(mapaconfig.difficultySum)
+    #print(mapaconfig.difficultySum)
     finalPath.extend(listPath)
     sleep(0.5)
   screenSettings.writeCost(f"O melhor caminho foi achado\nCalculando a melhor combinação",900 ,0,(255,255,255))
   mapaconfig.sortDictDifficulty()
-  sleep(2.0)
+  #Encontrando a melhor combinação de personagens
+  c = Combination()
+  c.calcBestCombination()
+  bestCombination = c.bestCombination
+
+ 
   
   print(mapaconfig.difficultySum)
- 
+  
   
   screenSettings.draw_map(mapaconfig)
   screenSettings.draw_moldure()

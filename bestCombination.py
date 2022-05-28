@@ -183,12 +183,12 @@ class Combination:
     def FindOne(self):
         for i in self.lPersonagem:
             i.reset()
-        possible = c.faz31etapas()
+        possible = self.faz31etapas()
         contador = 0
         while (possible == -1 and contador < 1000000):
             for i in self.lPersonagem:
                 i.vida = 8
-            possible = c.faz31etapas()
+            possible = self.faz31etapas()
             contador += 1
         return possible
 
@@ -213,7 +213,7 @@ class Combination:
         contador = 0
         best = calcDifficulty(self.bestCombination,dictt)
         while(contador < 1000):
-            lista = c.calcAgilityAndSort()
+            lista = self.calcAgilityAndSort()
             new = calcDifficulty(lista, dictt)
             if (new < best):
                 contador = 0
@@ -231,5 +231,5 @@ class Combination:
 
 
 # Testando
-c = Combination()
-c.calcBestCombination()
+#c = Combination()
+#c.calcBestCombination()
