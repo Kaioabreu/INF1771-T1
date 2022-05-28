@@ -33,7 +33,7 @@ def main():
   finalPath = list()
   print(len(mapaconfig.etapas))
 
-  for index, etapa in enumerate(mapaconfig.etapas[:-1]):
+  for index, etapa in enumerate(mapaconfig.etapas[:4]):
     coordInicial=mapaconfig.findGoal(etapa)
     coordetapa1=mapaconfig.findGoal(mapaconfig.etapas[index+1])
     etapa1=Etapa(coordetapa1[0],coordetapa1[1],[lPersonagem[1]])
@@ -46,9 +46,15 @@ def main():
     print(mapaconfig.difficultySum)
     finalPath.extend(listPath)
     sleep(0.5)
+  screenSettings.writeCost(f"O melhor caminho foi achado\nCalculando a melhor combinação",900 ,0,(255,255,255))
   mapaconfig.sortDictDifficulty()
+  sleep(2.0)
+  
   print(mapaconfig.difficultySum)
-  #screenSettings.draw_map(mapaconfig)
+ 
+  
+  screenSettings.draw_map(mapaconfig)
+  screenSettings.draw_moldure()
   screenSettings.writeCost(f"Custo Final = {custoParcial}",900 ,0,(255,255,255))
   etapa=0
   for no in finalPath:
