@@ -33,7 +33,7 @@ def main():
     screenSettings.draw_character_HUD(GameInterfaceVariables['HUDMarginX']+GameInterfaceVariables['CharHUDX']*i,Heigth*TileMargin+33,lPersonagem[i],mapaconfig)
   finalPath = list()
   print(len(mapaconfig.etapas))
-  listaCustoParcial = list()
+  listaCustoParcial = list() #lista dos custos do caminho (a*) por etapas
   for index, etapa in enumerate(mapaconfig.etapas[:-1]):
     coordInicial=mapaconfig.findGoal(etapa)
     coordetapa1=mapaconfig.findGoal(mapaconfig.etapas[index+1])
@@ -45,39 +45,41 @@ def main():
     listaCustoParcial.append(listPath[-1].g)
     finalPath.extend(listPath)
     sleep(0.5)
-  screenSettings.writeCost(f"O melhor caminho foi achado\nCalculando a melhor combinação",900 ,0,(255,255,255))
+  screenSettings.writeCost(f"O melhor caminho foi achado",900 ,0,(255,255,255))
+  screenSettings.writeCost("Achando a melhor combinação",900 ,20,(255,255,255))
   mapaconfig.sortDictDifficulty()
   #Encontrando a melhor combinação de personagens
   c = Combination()
   c.calcBestCombination()
   bestCombination = c.bestCombination
-  print(f"Tamanho da lista do a* {len(listaCustoParcial)}, f{listaCustoParcial}\nTamanho da lista dos personagem {len(c.bestList)}, f{c.bestList}")
- 
-  
   print(mapaconfig.difficultySum)
-  
-  
+  #Redesenhando o mapa e pintando o caminho
   screenSettings.draw_map(mapaconfig)
   screenSettings.draw_moldure()
-  screenSettings.writeCost(f"Custo Final = {custoParcial}",900 ,0,(255,255,255))
   etapa=0
+  custoTotal = 0
   for no in finalPath:
-    
     if (mapaconfig.getTileType(no.x,no.y)=='Etapa' and etapa <= 30):
-      
+      custoTotal += listaCustoParcial[etapa] + c.bestList[etapa]
+      screenSettings.writeCost(f"Custo Final = {custoTotal}",900 ,0,(255,255,255))
+      screenSettings.writeCost(f"Custo até agora = {listaCustoParcial[etapa] + c.bestList[etapa]}",900 ,20,(0,255,255))
       for i in bestCombination[etapa][0]:
         for j in lPersonagem:
-          print(i, j.nome)
+          #print(i, j.nome)
           if(i==j.nome):
             j.usar()
       etapa+=1
       for i in range(0,len(lPersonagem)):
         screenSettings.draw_character_HUD(GameInterfaceVariables['HUDMarginX']+GameInterfaceVariables['CharHUDX']*i,Heigth*TileMargin+33,lPersonagem[i],mapaconfig)
+      sleep(1)
     screenSettings.draw_path(no.x,no.y,mapaconfig,(255,0,0))
-    sleep(0.02)
+    sleep(0.03)
+   
+
   while running:
       for event in pygame.event.get():
           if event.type==pygame.QUIT:
               running=False
   pygame.quit()
+
 main()

@@ -36,7 +36,7 @@ def calcDifficulty(lAgi, dictEtapas):
     lEtapas = list(dictEtapas.items())
     listDifficulty = list()
     Difficulty = 0
-    for i in range(0, 30):
+    for i in range(0, 31):
         listDifficulty.append(lEtapas[i][1]/lAgi[i][1])
         Difficulty += lEtapas[i][1]/lAgi[i][1]
     return (Difficulty, listDifficulty)
@@ -46,8 +46,8 @@ class Combination:
     def __init__(self):
         self.lPersonagem = gerarInfoPersongem()[0]
         self.Dagilidade = gerarInfoPersongem()[1]
-        self.bestCombination = bestCombination()
-        self.bestList = None
+        self.bestCombination = bestCombination() # Melhor combinção de personagem até agora
+        self.bestList = None    #melhor lista de custo por etapa 
         return
 
     def getBestCombination(self):
