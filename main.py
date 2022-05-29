@@ -33,7 +33,7 @@ def main():
     screenSettings.draw_character_HUD(GameInterfaceVariables['HUDMarginX']+GameInterfaceVariables['CharHUDX']*i,Heigth*TileMargin+33,lPersonagem[i],mapaconfig)
   finalPath = list()
   print(len(mapaconfig.etapas))
-
+  listaCustoParcial = list()
   for index, etapa in enumerate(mapaconfig.etapas[:-1]):
     coordInicial=mapaconfig.findGoal(etapa)
     coordetapa1=mapaconfig.findGoal(mapaconfig.etapas[index+1])
@@ -42,9 +42,7 @@ def main():
     listPath = aEstrela(mapaconfig,etapa1,noInicial,screenSettings)
     mapaconfig.setDifficultySum(index+1, listPath[-1].g)
     custoParcial += listPath[-1].g
-    dificuldade=(index+1)*10+listPath[-1].g
-    tempo=dificuldade/etapa1.somaAgilidade
-    #print(mapaconfig.difficultySum)
+    listaCustoParcial.append(listPath[-1].g)
     finalPath.extend(listPath)
     sleep(0.5)
   screenSettings.writeCost(f"O melhor caminho foi achado\nCalculando a melhor combinação",900 ,0,(255,255,255))
@@ -53,7 +51,7 @@ def main():
   c = Combination()
   c.calcBestCombination()
   bestCombination = c.bestCombination
-
+  print(f"Tamanho da lista do a* {len(listaCustoParcial)}, f{listaCustoParcial}\nTamanho da lista dos personagem {len(c.bestList)}, f{c.bestList}")
  
   
   print(mapaconfig.difficultySum)

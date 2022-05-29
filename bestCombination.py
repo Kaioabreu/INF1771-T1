@@ -34,10 +34,12 @@ def gerarInfoPersongem():
 
 def calcDifficulty(lAgi, dictEtapas):
     lEtapas = list(dictEtapas.items())
+    listDifficulty = list()
     Difficulty = 0
-    for i in range(0, 31):
+    for i in range(0, 30):
+        listDifficulty.append(lEtapas[i][1]/lAgi[i][1])
         Difficulty += lEtapas[i][1]/lAgi[i][1]
-    return Difficulty
+    return (Difficulty, listDifficulty)
 
 
 class Combination:
@@ -45,6 +47,7 @@ class Combination:
         self.lPersonagem = gerarInfoPersongem()[0]
         self.Dagilidade = gerarInfoPersongem()[1]
         self.bestCombination = bestCombination()
+        self.bestList = None
         return
 
     def getBestCombination(self):
@@ -212,15 +215,16 @@ class Combination:
             sum += i
         contador = 0
         if self.bestCombination: #Se não existir vai ser None, assim irá direto ao None
-            best = calcDifficulty(self.bestCombination,dictt)
+            (best,self.bestList) = calcDifficulty(self.bestCombination,dictt)
         else:
             best = 100000000000
         while(contador < 1000):
             lista = self.calcAgilityAndSort()
-            new = calcDifficulty(lista, dictt)
+            (new, newList) = calcDifficulty(lista, dictt)
             if (new < best):
                 contador = 0
                 best = new
+                self.bestList = newList
                 self.bestCombination = lista
                 with open('bestCombination', 'wb') as fp:
                     pickle.dump(self.bestCombination, fp)
@@ -230,3 +234,5 @@ class Combination:
 
         return 
 
+c = Combination()
+c.calcBestCombination()
