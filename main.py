@@ -7,10 +7,6 @@ from time import sleep
 from random import randint
 import pickle
 
-"""with open('bestCombination','rb') as fp:
-  bestCombination=pickle.load(fp)
-print(bestCombination)"""
-
 def main():
   GameInterfaceVariables= {'Witdh':300,'Height':82,'HUDSize':150,'Margin':1,'TileSize':3,'HUDMarginX':40,'CharHUDX':166}
   Width=300
@@ -58,14 +54,18 @@ def main():
   screenSettings.draw_moldure()
   etapa=0
   custoTotal = 0
+  #precisa disso para redesenhar os personagem? 
+  for i in range(0,len(lPersonagem)):
+    screenSettings.draw_character_HUD(GameInterfaceVariables['HUDMarginX']+GameInterfaceVariables['CharHUDX']*i,Heigth*TileMargin+33,lPersonagem[i],mapaconfig)
+  sleep(0.5)
+  
   for no in finalPath:
     if (mapaconfig.getTileType(no.x,no.y)=='Etapa' and etapa <= 30):
       custoTotal += listaCustoParcial[etapa] + c.bestList[etapa]
-      screenSettings.writeCost(f"Custo Final = {custoTotal}",900 ,0,(255,255,255))
-      screenSettings.writeCost(f"Custo até agora = {listaCustoParcial[etapa] + c.bestList[etapa]}",900 ,20,(0,255,255))
+      screenSettings.writeCost(f"Custo Final = {round(custoTotal,2)}",900 ,0,(255,255,255))
+      screenSettings.writeCost(f"Custo da Etapa = {round(listaCustoParcial[etapa] + c.bestList[etapa],2)}",900 ,20,(0,255,255))
       for i in bestCombination[etapa][0]:
         for j in lPersonagem:
-          #print(i, j.nome)
           if(i==j.nome):
             j.usar()
       etapa+=1
