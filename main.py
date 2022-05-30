@@ -46,7 +46,7 @@ def main():
   screenSettings.writeCost("Achando a melhor combinação",900 ,20,(255,255,255))
   mapaconfig.sortDictDifficulty()
   #Encontrando a melhor combinação de personagens
-  c = Combination()
+  c = Combination(mapaconfig.difficultySum)
   c.calcBestCombination()
   bestCombination = c.bestCombination
   print(mapaconfig.difficultySum)
