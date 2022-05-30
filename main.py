@@ -23,6 +23,7 @@ def main():
   Dagilidade=mapaconfig.get_agility()
   lPersonagem=[]
   for i in Dagilidade:
+    #print(i)
     pers=Personagem(Dagilidade[i],i)
     lPersonagem.append(pers)
   for i in range(0,len(lPersonagem)):
@@ -67,6 +68,7 @@ def main():
       screenSettings.writeCost(f"Custo Final = {round(custoTotal,2)}",900 ,0,(255,255,255))
       screenSettings.writeCost(f"Custo da Etapa = {round(listaCustoParcial[etapa] + c.bestList[etapa],2)}",900 ,20,(0,255,255))
       for i in bestCombination[etapa][0]:
+        screenSettings.draw_selected_character[i]
         for j in lPersonagem:
           if(i==j.nome):
             teste[j.nome] += 1
