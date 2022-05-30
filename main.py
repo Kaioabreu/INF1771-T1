@@ -28,7 +28,13 @@ def main():
     lPersonagem.append(pers)
   for i in range(0,len(lPersonagem)):
     screenSettings.draw_character_HUD(GameInterfaceVariables['HUDMarginX']+GameInterfaceVariables['CharHUDX']*i,Heigth*TileMargin+33,lPersonagem[i],mapaconfig)
+  #Para pegar o ponto inicial e adicionar no finalPath
+  coordInicial=mapaconfig.findGoal('0')
+  coordetapa1=mapaconfig.findGoal(mapaconfig.etapas[1])
+  etapa1=Etapa(coordetapa1[0],coordetapa1[1],[lPersonagem[1]])
+  noInicial=Node(mapaconfig,etapa1,coordInicial[0],coordInicial[1],0)
   finalPath = list()
+  finalPath.append(noInicial)
   print(len(mapaconfig.etapas))
   listaCustoParcial = list() #lista dos custos do caminho (a*) por etapas
   for index, etapa in enumerate(mapaconfig.etapas[:-1]):
@@ -41,6 +47,7 @@ def main():
     custoParcial += listPath[-1].g
     listaCustoParcial.append(listPath[-1].g)
     finalPath.extend(listPath)
+  print(listPath)
   screenSettings.writeCost(f"O melhor caminho foi achado",900 ,0,(255,255,255))
   screenSettings.writeCost("Achando a melhor combinação",900 ,20,(255,255,255))
   mapaconfig.sortDictDifficulty()
@@ -59,16 +66,15 @@ def main():
     screenSettings.draw_character_HUD(GameInterfaceVariables['HUDMarginX']+GameInterfaceVariables['CharHUDX']*i,Heigth*TileMargin+33,lPersonagem[i],mapaconfig)
   #sleep(0.5)
   teste = {"Aang":0,"Zukko":0,"Toph":0,"Katara":0,"Sokka":0,"Appa":0,"Momo":0}
-  print(len(bestCombination))
   for no in finalPath:
 
-    if (mapaconfig.getTileType(no.x,no.y) == mapaconfig.etapas[etapa]):
+    if (mapaconfig.getTileType(no.x,no.y) == mapaconfig.etapas[etapa] and etapa <= 30):
       print("Chegou em uma etapa")
       custoTotal += listaCustoParcial[etapa] + c.bestList[etapa]
       screenSettings.writeCost(f"Custo Final = {round(custoTotal,2)}",900 ,0,(255,255,255))
       screenSettings.writeCost(f"Custo da Etapa = {round(listaCustoParcial[etapa] + c.bestList[etapa],2)}",900 ,20,(0,255,255))
       for i in bestCombination[etapa][0]:
-        screenSettings.draw_selected_character[i]
+        #screenSettings.draw_selected_character[i]
         for j in lPersonagem:
           if(i==j.nome):
             teste[j.nome] += 1

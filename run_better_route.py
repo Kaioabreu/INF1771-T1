@@ -7,7 +7,6 @@ class Personagem:
     self.nome=nome
     self.vida=8
     self.agilidade=agilidade
-    print(str(nome))
     self.image = pygame.image.load("assets/"+str(nome)+".png")
   def usar(self):
     self.vida-=1
