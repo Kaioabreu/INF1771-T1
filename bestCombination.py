@@ -118,10 +118,10 @@ class Combination:
     def faz31etapas(self):
         a1 = a2 = a3 = a4 = a5 = a6 = a7 = 0
         while(a1+2*a2+3*a3+4*a4+5*a5+6*a6+7*a7 != 56 or (a1+a2+a3+a4+a5+a6+a7) != 31):
-            a1 = randint(0, 10)
-            a2 = randint(0, 26)
-            a3 = randint(0, 18)
-            a4 = randint(0, 2)
+            a1 = randint(7,7)
+            a2 = randint(23, 23)
+            a3 = randint(1, 1)
+            a4 = randint(0, 0)
             a5 = randint(0, 0)
             a6 = randint(0, 0)
             a7 = randint(0, 0)
@@ -218,7 +218,7 @@ class Combination:
             (best,self.bestList) = calcDifficulty(self.bestCombination,dictt)
         else:
             best = 100000000000
-        while(contador < 1000):
+        while(contador < 3000):
             lista = self.calcAgilityAndSort()
             (new, newList) = calcDifficulty(lista, dictt)
             if (new < best):
@@ -233,3 +233,7 @@ class Combination:
         print(f"{best}\n{self.bestCombination}")
 
         return 
+gamemap=GameMap('mapa.txt',10,20)
+c = Combination(gamemap.difficulty)
+while(True):
+    c.calcBestCombination()

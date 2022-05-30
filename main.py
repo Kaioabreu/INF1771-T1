@@ -52,7 +52,7 @@ def main():
   screenSettings.writeCost("Achando a melhor combinação",900 ,20,(255,255,255))
   mapaconfig.sortDictDifficulty()
   #Encontrando a melhor combinação de personagens
-  c = Combination(mapaconfig.difficultySum)
+  c = Combination(mapaconfig.difficulty)
   c.calcBestCombination()
   bestCombination = c.bestCombination
   print(mapaconfig.difficultySum)
@@ -65,7 +65,6 @@ def main():
   for i in range(0,len(lPersonagem)):
     screenSettings.draw_character_HUD(GameInterfaceVariables['HUDMarginX']+GameInterfaceVariables['CharHUDX']*i,Heigth*TileMargin+33,lPersonagem[i],mapaconfig)
   #sleep(0.5)
-  teste = {"Aang":0,"Zukko":0,"Toph":0,"Katara":0,"Sokka":0,"Appa":0,"Momo":0}
   for no in finalPath:
 
     if (mapaconfig.getTileType(no.x,no.y) == mapaconfig.etapas[etapa] and etapa <= 30):
@@ -78,10 +77,8 @@ def main():
         screenSettings.draw_selected_character(i)
         for j in lPersonagem:
           if(i==j.nome):
-            teste[j.nome] += 1
             j.usar()
       etapa+=1
-      print(teste)
       for i in range(0,len(lPersonagem)):
         screenSettings.draw_character_HUD(GameInterfaceVariables['HUDMarginX']+GameInterfaceVariables['CharHUDX']*i,Heigth*TileMargin+33,lPersonagem[i],mapaconfig)
       sleep(1)
