@@ -29,8 +29,11 @@ class GameMap:
         return self.agility
     def sortDictDifficulty(self):
         self.difficultySum=dict(sorted(self.difficultySum.items(), key=lambda item:item[1]))
+    
     def get_tile_difficulty(self, x):
-        return self.tile_difficulty[x]
+        if x in ".RVAMF":
+            return self.tile_difficulty[x]
+        return 0
     
     def get_matrix(self):
         return self.matriz
@@ -43,10 +46,8 @@ class GameMap:
         return -1
     
     def getTileType(self, x,y):
-        if(self.map[y][x] in ".ARVMF"):
-            return self.map[y][x]
-        else :
-            return 'Etapa'
+        return self.map[y][x]
+
     
 def get_tempo(dificuldade, somatorio_agilidades):
     return dificuldade/somatorio_agilidades

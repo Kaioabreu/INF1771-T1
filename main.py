@@ -40,7 +40,6 @@ def main():
     custoParcial += listPath[-1].g
     listaCustoParcial.append(listPath[-1].g)
     finalPath.extend(listPath)
-    sleep(0.5)
   screenSettings.writeCost(f"O melhor caminho foi achado",900 ,0,(255,255,255))
   screenSettings.writeCost("Achando a melhor combinação",900 ,20,(255,255,255))
   mapaconfig.sortDictDifficulty()
@@ -57,18 +56,23 @@ def main():
   #precisa disso para redesenhar os personagem? 
   for i in range(0,len(lPersonagem)):
     screenSettings.draw_character_HUD(GameInterfaceVariables['HUDMarginX']+GameInterfaceVariables['CharHUDX']*i,Heigth*TileMargin+33,lPersonagem[i],mapaconfig)
-  sleep(0.5)
-  
+  #sleep(0.5)
+  teste = {"Aang":0,"Zukko":0,"Toph":0,"Katara":0,"Sokka":0,"Appa":0,"Momo":0}
+  print(len(bestCombination))
   for no in finalPath:
-    if (mapaconfig.getTileType(no.x,no.y)=='Etapa' and etapa <= 30):
+
+    if (mapaconfig.getTileType(no.x,no.y) == mapaconfig.etapas[etapa]):
+      print("Chegou em uma etapa")
       custoTotal += listaCustoParcial[etapa] + c.bestList[etapa]
       screenSettings.writeCost(f"Custo Final = {round(custoTotal,2)}",900 ,0,(255,255,255))
       screenSettings.writeCost(f"Custo da Etapa = {round(listaCustoParcial[etapa] + c.bestList[etapa],2)}",900 ,20,(0,255,255))
       for i in bestCombination[etapa][0]:
         for j in lPersonagem:
           if(i==j.nome):
+            teste[j.nome] += 1
             j.usar()
       etapa+=1
+      print(teste)
       for i in range(0,len(lPersonagem)):
         screenSettings.draw_character_HUD(GameInterfaceVariables['HUDMarginX']+GameInterfaceVariables['CharHUDX']*i,Heigth*TileMargin+33,lPersonagem[i],mapaconfig)
       sleep(1)
