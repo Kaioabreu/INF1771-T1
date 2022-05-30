@@ -66,10 +66,9 @@ class ScreenBoard:
        self.draw_health_bar(x,y+70,personagem.vida)
        pygame.display.flip()
     
-    def draw_selected_character(self, lPersonagens):
+    def draw_selected_character(self, Personagem):
         daux={"Aang":0, "Zukko":1, "Toph":2, "Katara":3, "Sokka":4, "Appa":5, "Momo":6}
-        for i in lPersonagens:
-            self.screen.blit(self.selectedMoldure,(100+166*daux[i],500))
+        self.screen.blit(self.selectedMoldure,(25+166*daux[Personagem],345))
         pygame.display.flip()
             
 

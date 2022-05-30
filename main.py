@@ -70,11 +70,12 @@ def main():
 
     if (mapaconfig.getTileType(no.x,no.y) == mapaconfig.etapas[etapa] and etapa <= 30):
       print("Chegou em uma etapa")
+      screenSettings.draw_moldure()
       custoTotal += listaCustoParcial[etapa] + c.bestList[etapa]
       screenSettings.writeCost(f"Custo Final = {round(custoTotal,2)}",900 ,0,(255,255,255))
       screenSettings.writeCost(f"Custo da Etapa = {round(listaCustoParcial[etapa] + c.bestList[etapa],2)}",900 ,20,(0,255,255))
       for i in bestCombination[etapa][0]:
-        #screenSettings.draw_selected_character[i]
+        screenSettings.draw_selected_character(i)
         for j in lPersonagem:
           if(i==j.nome):
             teste[j.nome] += 1
