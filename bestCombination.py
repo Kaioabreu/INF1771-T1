@@ -43,11 +43,12 @@ def calcDifficulty(lAgi, dictEtapas):
 
 
 class Combination:
-    def __init__(self):
+    def __init__(self,dictt):
         self.lPersonagem = gerarInfoPersongem()[0]
         self.Dagilidade = gerarInfoPersongem()[1]
         self.bestCombination = bestCombination() # Melhor combinção de personagem até agora
         self.bestList = None    #melhor lista de custo por etapa 
+        self.dictCustoCaminho = dictt 
         return
 
     def getBestCombination(self):
@@ -208,8 +209,7 @@ class Combination:
         return lAgi
 
     def calcBestCombination(self):
-        dictt = {5: 76, 3: 82, 4: 94, 1: 107, 8: 124, 11: 137, 9: 142, 10: 146, 2: 154, 12: 178, 15: 193, 7: 209, 19: 215, 18: 216, 20: 217, 16: 220,
-         13: 229, 6: 231, 17: 240, 21: 243, 14: 250, 24: 263, 22: 285, 25: 315, 26: 317, 28: 364, 29: 390, 30: 395, 27: 407, 23: 472, 31: 478}
+        dictt = self.dictCustoCaminho
         sum = 0
         for i in dictt.values():
             sum += i
@@ -233,6 +233,3 @@ class Combination:
         print(f"{best}\n{self.bestCombination}")
 
         return 
-
-c = Combination()
-c.calcBestCombination()
