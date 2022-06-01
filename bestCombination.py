@@ -30,6 +30,7 @@ def gerarInfoPersongem():
     for i in Dagilidade:
         pers = Personagem(Dagilidade[i], i)
         lPersonagem.append(pers)
+
     return (lPersonagem, Dagilidade)
 
 def calcDifficulty(lAgi, dictEtapas):
@@ -113,14 +114,13 @@ class Combination:
             for j in self.lPersonagem:
                 if(i == j.nome):
                     j.usar()
-                    #print("%s : %d vidas"%(j.nome, j.vida))
 
     def faz31etapas(self):
         a1 = a2 = a3 = a4 = a5 = a6 = a7 = 0
-        while(a1+2*a2+3*a3+4*a4+5*a5+6*a6+7*a7 != 56 or (a1+a2+a3+a4+a5+a6+a7) != 31):
-            a1 = randint(7,7)
-            a2 = randint(23, 23)
-            a3 = randint(1, 1)
+        while(a1+2*a2+3*a3+4*a4+5*a5+6*a6+7*a7 != 55 or (a1+a2+a3+a4+a5+a6+a7) != 31):
+            a1 = randint(6, 13)
+            a2 = randint(15, 24)
+            a3 = randint(0, 3)
             a4 = randint(0, 0)
             a5 = randint(0, 0)
             a6 = randint(0, 0)
@@ -218,7 +218,7 @@ class Combination:
             (best,self.bestList) = calcDifficulty(self.bestCombination,dictt)
         else:
             best = 100000000000
-        while(contador < 3000):
+        while(contador < 5000):
             lista = self.calcAgilityAndSort()
             (new, newList) = calcDifficulty(lista, dictt)
             if (new < best):
@@ -233,3 +233,9 @@ class Combination:
         print(f"{best}\n{self.bestCombination}")
 
         return 
+
+gamemap=GameMap('mapa.txt',10,20)
+
+c = Combination(gamemap.difficulty)
+while(True):
+    c.calcBestCombination()
