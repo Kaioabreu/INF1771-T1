@@ -23,7 +23,6 @@ def main():
   Dagilidade=mapaconfig.get_agility()
   lPersonagem=[]
   for i in Dagilidade:
-    #print(i)
     pers=Personagem(Dagilidade[i],i)
     lPersonagem.append(pers)
   for i in range(0,len(lPersonagem)):
@@ -31,23 +30,21 @@ def main():
   #Para pegar o ponto inicial e adicionar no finalPath
   coordInicial=mapaconfig.findGoal('0')
   coordetapa1=mapaconfig.findGoal(mapaconfig.etapas[1])
-  etapa1=Etapa(coordetapa1[0],coordetapa1[1],[lPersonagem[1]])
+  etapa1=Etapa(coordetapa1[0],coordetapa1[1])
   noInicial=Node(mapaconfig,etapa1,coordInicial[0],coordInicial[1],0)
   finalPath = list()
   finalPath.append(noInicial)
-  print(len(mapaconfig.etapas))
   listaCustoParcial = list() #lista dos custos do caminho (a*) por etapas
   for index, etapa in enumerate(mapaconfig.etapas[:-1]):
     coordInicial=mapaconfig.findGoal(etapa)
     coordetapa1=mapaconfig.findGoal(mapaconfig.etapas[index+1])
-    etapa1=Etapa(coordetapa1[0],coordetapa1[1],[lPersonagem[1]])
+    etapa1=Etapa(coordetapa1[0],coordetapa1[1])
     noInicial=Node(mapaconfig,etapa1,coordInicial[0],coordInicial[1],0)
     listPath = aEstrela(mapaconfig,etapa1,noInicial,screenSettings)
     mapaconfig.setDifficultySum(index+1, listPath[-1].g)
     custoParcial += listPath[-1].g
     listaCustoParcial.append(listPath[-1].g)
     finalPath.extend(listPath)
-  print(listPath)
   screenSettings.writeCost(f"O melhor caminho foi achado",900 ,0,(255,255,255))
   screenSettings.writeCost("Achando a melhor combinação",900 ,20,(255,255,255))
   mapaconfig.sortDictDifficulty()
@@ -55,7 +52,6 @@ def main():
   c = Combination(mapaconfig.difficulty)
   c.calcBestCombination()
   bestCombination = c.bestCombination
-  print(mapaconfig.difficultySum)
   #Redesenhando o mapa e pintando o caminho
   screenSettings.draw_map(mapaconfig)
   screenSettings.draw_moldure()
@@ -68,7 +64,6 @@ def main():
   for no in finalPath:
 
     if (mapaconfig.getTileType(no.x,no.y) == mapaconfig.etapas[etapa] and etapa <= 30):
-      print("Chegou em uma etapa")
       screenSettings.draw_moldure()
       custoTotal += listaCustoParcial[etapa] + c.bestList[etapa]
       screenSettings.writeCost(f"Custo Final = {round(custoTotal,2)}",900 ,0,(255,255,255))
