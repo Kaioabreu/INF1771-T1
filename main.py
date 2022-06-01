@@ -47,7 +47,7 @@ def main():
     custoParcial += listPath[-1].g
     listaCustoParcial.append(listPath[-1].g)
     finalPath.extend(listPath)
-  print(listPath)
+  print(custoParcial)
   screenSettings.writeCost(f"O melhor caminho foi achado",900 ,0,(255,255,255))
   screenSettings.writeCost("Achando a melhor combinação",900 ,20,(255,255,255))
   mapaconfig.sortDictDifficulty()

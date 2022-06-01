@@ -234,8 +234,3 @@ class Combination:
 
         return 
 
-gamemap=GameMap('mapa.txt',10,20)
-
-c = Combination(gamemap.difficulty)
-while(True):
-    c.calcBestCombination()
