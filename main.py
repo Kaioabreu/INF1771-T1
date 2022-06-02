@@ -47,7 +47,7 @@ def main():
     custoParcial += listPath[-1].g
     listaCustoParcial.append(listPath[-1].g)
     finalPath.extend(listPath)
-  print(custoParcial)
+  screenSettings.writeCost(f"Custo do A*{custoParcial}",900,40,(255,255,255) )
   screenSettings.writeCost(f"O melhor caminho foi achado",900 ,0,(255,255,255))
   screenSettings.writeCost("Achando a melhor combinação",900 ,20,(255,255,255))
   mapaconfig.sortDictDifficulty()
@@ -76,6 +76,7 @@ def main():
       custoTotal += listaCustoParcial[etapa] + c.bestList[etapa]
       screenSettings.writeCost(f"Custo Final = {round(custoTotal,2)}",900 ,0,(255,255,255))
       screenSettings.writeCost(f"Custo da Etapa = {round(listaCustoParcial[etapa] + c.bestList[etapa],2)}",900 ,20,(0,255,255))
+      screenSettings.draw_moldure()
       for i in bestCombination[etapa][0]:
         screenSettings.draw_selected_character(i)
         for j in lPersonagem:

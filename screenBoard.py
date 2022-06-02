@@ -77,7 +77,7 @@ class ScreenBoard:
         pygame.display.flip()
 
     def writeCost(self,custo,x,y, cor):
-        gameFont = pygame.font.SysFont('Comic Sans MS', 24)
+        gameFont = pygame.font.SysFont('Comic Sans MS', 12)
         texto = gameFont.render(custo, False,cor,(0,0,0))
         self.screen.blit(texto, (x,y))
         pygame.display.flip()
