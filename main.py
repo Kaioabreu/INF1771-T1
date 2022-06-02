@@ -69,7 +69,10 @@ def main():
 
     if (mapaconfig.getTileType(no.x,no.y) == mapaconfig.etapas[etapa] and etapa <= 30):
       print("Chegou em uma etapa")
-      screenSettings.draw_moldure()
+      #screenSettings.draw_moldure()
+      if etapa != 0:
+        for i in bestCombination[etapa-1][0]:
+          screenSettings.draw_selected_character(i,apaga = True)
       custoTotal += listaCustoParcial[etapa] + c.bestList[etapa]
       screenSettings.writeCost(f"Custo Final = {round(custoTotal,2)}",900 ,0,(255,255,255))
       screenSettings.writeCost(f"Custo da Etapa = {round(listaCustoParcial[etapa] + c.bestList[etapa],2)}",900 ,20,(0,255,255))
@@ -82,6 +85,7 @@ def main():
       for i in range(0,len(lPersonagem)):
         screenSettings.draw_character_HUD(GameInterfaceVariables['HUDMarginX']+GameInterfaceVariables['CharHUDX']*i,Heigth*TileMargin+33,lPersonagem[i],mapaconfig)
       sleep(1)
+      
     screenSettings.draw_path(no.x,no.y,mapaconfig,(255,0,0))
     sleep(0.03)
    

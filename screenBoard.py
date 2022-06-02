@@ -14,6 +14,7 @@ class ScreenBoard:
     healthBarSprints=(pygame.image.load("assets/begin_fill_health_bar.png"),pygame.image.load("assets/fill_health_bar.png"),pygame.image.load("assets/end_fill_health_bar.png"),pygame.image.load("assets/begin_empty_health_bar.png"),pygame.image.load("assets/empty_health_bar.png"),pygame.image.load("assets/end_empty_health_bar.png"))
     HudMoldure=(pygame.image.load("assets/HUDMOLDURE.png"))
     selectedMoldure=pygame.image.load("assets/selectChar.png")
+    selectedMoldureWhite = pygame.image.load("assets/selectCharInvert.png")
 
     def __init__(self, width, height, tile_size, margin):
         self.width = width
@@ -66,11 +67,14 @@ class ScreenBoard:
        self.draw_health_bar(x,y+70,personagem.vida)
        pygame.display.flip()
     
-    def draw_selected_character(self, Personagem):
+    def draw_selected_character(self, Personagem, apaga = False):
         daux={"Aang":0, "Zukko":1, "Toph":2, "Katara":3, "Sokka":4, "Appa":5, "Momo":6}
-        self.screen.blit(self.selectedMoldure,(25+166*daux[Personagem],345))
+        if apaga:
+            self.screen.blit(self.selectedMoldureWhite,(25+166*daux[Personagem],345))
+        else:
+            self.screen.blit(self.selectedMoldure,(25+166*daux[Personagem],345))
+
         pygame.display.flip()
-            
 
     def writeCost(self,custo,x,y, cor):
         gameFont = pygame.font.SysFont('Comic Sans MS', 24)
