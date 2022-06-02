@@ -106,10 +106,26 @@ def aEstrela(GameMap,etapa, node, ScreenBoard):
     print("Caminho não encontrado")
     return None
 
-
-
-    
-    
+def calculaTodasEtapas(mapaconfig, screenSettings ,lPersonagem):
+  coordInicial=mapaconfig.findGoal('0')
+  coordetapa1=mapaconfig.findGoal(mapaconfig.etapas[1])
+  etapa1=Etapa(coordetapa1[0],coordetapa1[1],[lPersonagem[1]])
+  noInicial=Node(mapaconfig,etapa1,coordInicial[0],coordInicial[1],0)
+  finalPath = list()
+  finalPath.append(noInicial)
+  listaCustoParcial = list() #lista dos custos do caminho (a*) por etapas
+  custoAstar = 0
+  for index, etapa in enumerate(mapaconfig.etapas[:-1]):
+    coordInicial=mapaconfig.findGoal(etapa)
+    coordetapa1=mapaconfig.findGoal(mapaconfig.etapas[index+1])
+    etapa1=Etapa(coordetapa1[0],coordetapa1[1],[lPersonagem[1]])
+    noInicial=Node(mapaconfig,etapa1,coordInicial[0],coordInicial[1],0)
+    listPath = aEstrela(mapaconfig,etapa1,noInicial,screenSettings)
+    mapaconfig.setDifficultySum(index+1, listPath[-1].g)
+    custoAstar += listPath[-1].g
+    listaCustoParcial.append(listPath[-1].g)
+    finalPath.extend(listPath)
+  return (custoAstar, finalPath)
         
      
 
