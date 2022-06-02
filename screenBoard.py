@@ -1,10 +1,9 @@
-from webbrowser import BackgroundBrowser
+from time import sleep
 import pygame
 cores = {
     'R': (128, 128, 128),  # cinza
     'A': (0, 150, 255),  # azul
     'M': (139, 69, 19),  # marrom
-    'V': (0, 51, 0),  # verde
     'F': (34, 139, 34),  # emerald green
     '.': (218, 200, 179)  # bege
 }
@@ -15,13 +14,18 @@ class ScreenBoard:
     HudMoldure=(pygame.image.load("assets/HUDMOLDURE.png"))
     selectedMoldure=pygame.image.load("assets/selectChar.png")
     selectedMoldureWhite = pygame.image.load("assets/selectCharInvert.png")
+    rows=300
+    columns=82
+    HUDSize = 150
+    margin = 1
+    tile_size = 3
+    width = rows*(margin+tile_size)
+    height = columns*(margin+tile_size)
+    HUDMarginX = 40
+    CharHUDX = 166
 
-    def __init__(self, width, height, tile_size, margin):
-        self.width = width
-        self.height = height
-        self.tile_size = tile_size
-        self.margin = margin
-        self.screen = pygame.display.set_mode((width, height))
+    def __init__(self):
+        self.screen = pygame.display.set_mode((self.width, self.height+self.HUDSize))
         self.gameFont22 = pygame.font.Font("assets/alterebro-pixel-font.ttf", 32)
     def draw_moldure(self):
         self.screen.blit(self.HudMoldure,(0,(self.tile_size+self.margin)*82))
@@ -82,4 +86,32 @@ class ScreenBoard:
         self.screen.blit(texto, (x,y))
         pygame.display.flip()
         return 
+    
+    def draw_allCaractersHUD(self, lPersonagem, MapSettings):
+        for i in range(0,len(lPersonagem)):
+            self.draw_character_HUD(self.HUDMarginX+self.CharHUDX*i,self.columns*(self.margin+self.tile_size)+33,lPersonagem[i],MapSettings)
+    
+    def draw_game(self,MapSettings, lPersonagem):
+        self.draw_map(MapSettings)
+        self.draw_moldure()
+        self.draw_allCaractersHUD(lPersonagem, MapSettings)
+
+    def draw_finalPath(self, finalPath, bestCombination, lPersonagem, MapSettings):
+        etapa=0
+        for no in finalPath:
+            if (MapSettings.getTileType(no.x,no.y) == MapSettings.etapas[etapa] and etapa <= 30):
+                if etapa != 0:
+                    for i in bestCombination[etapa-1][0]:
+                        self.draw_selected_character(i,apaga = True)
+                for i in bestCombination[etapa][0]:
+                    self.draw_selected_character(i)
+                    for j in lPersonagem:
+                        if(i==j.nome):
+                            j.usar()
+                etapa+=1
+                self.draw_allCaractersHUD(lPersonagem,MapSettings)
+                sleep(1)
+                
+            self.draw_path(no.x,no.y,MapSettings,(255,0,0))
+            sleep(0.03)
 
