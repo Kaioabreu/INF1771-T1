@@ -118,9 +118,9 @@ class Combination:
     def faz31etapas(self):
         a1 = a2 = a3 = a4 = a5 = a6 = a7 = 0
         while(a1+2*a2+3*a3+4*a4+5*a5+6*a6+7*a7 != 55 or (a1+a2+a3+a4+a5+a6+a7) != 31):
-            a1 = randint(6, 13)
-            a2 = randint(15, 24)
-            a3 = randint(0, 3)
+            a1 = randint(9, 9)
+            a2 = randint(20, 20)
+            a3 = randint(2, 2)
             a4 = randint(0, 0)
             a5 = randint(0, 0)
             a6 = randint(0, 0)
@@ -230,7 +230,12 @@ class Combination:
                     pickle.dump(self.bestCombination, fp)
             else:
                 contador += 1
-        print(f"{best}\n{self.bestCombination}")
+        #print(f"{best}\n{self.bestCombination}")
 
-        return 
+        return best
+'''
+mapa = GameMap('mapa.txt', 10, 10)
+c=Combination(mapa.difficulty)
+while True:
+    c.calcBestCombination()'''
 

@@ -28,11 +28,13 @@ def main():
   mapaconfig.sortDictDifficulty()
   #Encontrando a melhor combinação de personagens
   c = Combination(mapaconfig.difficulty)
-  c.calcBestCombination()
+  bestvalue = c.calcBestCombination()
   bestCombination = c.bestCombination
   #Redesenhando o mapa e pintando o caminho
   screenSettings.draw_game(mapaconfig,lPersonagem)
   #Desenhando o caminho final
+  screenSettings.writeCost(f"Custo do A*{custoAstar}",900,40,(255,255,255) )
+  screenSettings.writeCost(f"O custo da busca local foi {bestvalue}",900 ,20,(255,255,255))
   screenSettings.draw_finalPath(finalPath,bestCombination,lPersonagem,mapaconfig)
   while running:
       for event in pygame.event.get():
