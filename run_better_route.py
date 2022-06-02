@@ -12,11 +12,19 @@ class Personagem:
     self.vida-=1
   def reset(self):
    self.vida=8
+
+def somaAgili(etapa):
+  soma = 0
+  for i in etapa.lPersonagens:
+    soma+= i.agilidade
+  return soma
 class Etapa:
     
-  def __init__(self, x, y):
+  def __init__(self, x, y, lPersonagens):
     self.GoalX= x
     self.GoalY= y
+    self.lPersonagens= lPersonagens
+    self.somaAgilidade=somaAgili(self)
       
   def manhattan(self,x,y):
     return abs(self.GoalX - x)+abs(self.GoalY - y)
